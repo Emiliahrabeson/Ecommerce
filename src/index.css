@@ -1,1 +1,42 @@
 @import "tailwindcss";
+
+@theme {
+  /* Override Blue with Pink/Rose for primary actions */
+  --color-blue-50: #fff1f2;
+  --color-blue-100: #ffe4e6;
+  --color-blue-200: #fecdd3;
+  --color-blue-300: #fda4af;
+  --color-blue-400: #fb7185;
+  --color-blue-500: #f43f5e;
+  --color-blue-600: #e11d48;
+  --color-blue-700: #be123c;
+  --color-blue-800: #9f1239;
+  --color-blue-900: #881337;
+  --color-blue-950: #4c0519;
+
+  /* Override Gray with Stone (Warmer) */
+  --color-gray-50: #fafaf9;
+  --color-gray-100: #f5f5f4;
+  --color-gray-200: #e7e5e4;
+  --color-gray-300: #d6d3d1;
+  --color-gray-400: #a8a29e;
+  --color-gray-500: #78716c;
+  --color-gray-600: #57534e;
+  --color-gray-700: #44403c;
+  --color-gray-800: #292524;
+  --color-gray-900: #1c1917;
+  --color-gray-950: #0c0a09;
+
+  /* Soften other semantic colors to be more pastel */
+  /* Green -> Mint/Emerald */
+  --color-green-100: #d1fae5;
+  --color-green-600: #059669;
+  
+  /* Purple -> Violet/Lilac */
+  --color-purple-100: #ede9fe;
+  --color-purple-600: #7c3aed;
+
+  /* Orange -> Peach/Orange */
+  --color-orange-100: #ffedd5;
+  --color-orange-600: #ea580c;
+}
