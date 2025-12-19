@@ -1,7 +1,15 @@
 import { useState } from "react";
 import useClients from "./hooks/useClient";
 import useProducts from "./hooks/useProducts";
-import { Package, TrendingUp, Tag, Users, MapPin, ShoppingCart, BarChart3 } from "lucide-react";
+import {
+  Package,
+  TrendingUp,
+  Tag,
+  Users,
+  MapPin,
+  ShoppingCart,
+  BarChart3,
+} from "lucide-react";
 import { AllProductsTab } from "./components/allProductsTab";
 import { TopProductsTab } from "./components/topProductsTab";
 import { CategoriesTab } from "./components/categoriesTab";
@@ -10,7 +18,6 @@ import { PopularCitiesTab } from "./components/popularCitiesTab";
 import { StatsCard } from "./components/ui/statsCard";
 import { ProductDetailsModal } from "./components/ui/productDetailsModal";
 
-
 export default function App() {
   const [activeTab, setActiveTab] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -18,15 +25,15 @@ export default function App() {
   const { products, loading: productsLoading } = useProducts();
   const { clients, loading: clientsLoading } = useClients();
 
-  const categories = [...new Set(products.map(p => p.category))];
+  const categories = [...new Set(products.map((p) => p.category))];
   const totalSales = products.reduce((sum, p) => sum + p.sales, 0);
 
   const tabs = [
-    { label: 'All Products', icon: Package, component: AllProductsTab },
-    { label: 'Top Products', icon: TrendingUp, component: TopProductsTab },
-    { label: 'Categories', icon: Tag, component: CategoriesTab },
-    { label: 'Clients', icon: Users, component: ClientsTab },
-    { label: 'Popular Cities', icon: MapPin, component: PopularCitiesTab }
+    { label: "All Products", icon: Package, component: AllProductsTab },
+    { label: "Top Products", icon: TrendingUp, component: TopProductsTab },
+    { label: "Categories", icon: Tag, component: CategoriesTab },
+    { label: "Clients", icon: Users, component: ClientsTab },
+    { label: "Popular Cities", icon: MapPin, component: PopularCitiesTab },
   ];
 
   const ActiveTabComponent = tabs[activeTab].component;
@@ -89,10 +96,11 @@ export default function App() {
                 <button
                   key={index}
                   onClick={() => setActiveTab(index)}
-                  className={`flex items-center gap-2 px-6 py-4 font-medium whitespace-nowrap transition-colors ${activeTab === index
-                    ? 'border-b-2 border-blue-600 text-blue-600'
-                    : 'text-gray-600 hover:text-gray-900'
-                    }`}
+                  className={`flex items-center gap-2 px-6 py-4 font-medium whitespace-nowrap transition-colors ${
+                    activeTab === index
+                      ? "border-b-2 border-blue-600 text-blue-600"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
                 >
                   <Icon size={20} />
                   {tab.label}
@@ -103,7 +111,6 @@ export default function App() {
         </div>
 
         <ActiveTabComponent
-          products={products}
           clients={clients}
           onProductClick={setSelectedProduct}
         />
