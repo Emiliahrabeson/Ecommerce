@@ -11,6 +11,11 @@ const apiService = {
       throw error;
     }
   },
+
+  // function searchProduct(params) {
+  //   return await this.get(
+  //     `/searchProduct?offset={params.offset}`)
+  // }
 };
 
 export default apiService;

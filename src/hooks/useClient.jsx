@@ -10,8 +10,17 @@ const useClients = () => {
     const fetchClients = async () => {
       try {
         setLoading(true);
+        setError(null);
+
+        const data = await apiService.get("/allClients", {
+          limit: 100,
+          offset: 0,
+        });
         console.log(" data tab tab:", data);
-        setClients(data);
+        const flattenedData = Array.isArray(data) ? data.flat() : [];
+
+        console.log("Flattened clients:", flattenedData);
+        setClients(flattenedData);
       } catch (err) {
         setLoading(false);
       }
