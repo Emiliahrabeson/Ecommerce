@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { SearchBar } from "./ui/searchBar";
 import apiService from "../services";
-import { calculateTopProducts } from "../utils";
 
 export const AllProductsTab = ({ onProductClick }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 50;
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [totalItems, setTotalItems] = useState(0);
@@ -16,20 +15,11 @@ export const AllProductsTab = ({ onProductClick }) => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const offset = (currentPage - 1) * itemsPerPage;
-        const response = await apiService.get("/searchProducts", {
-          limit: itemsPerPage,
-          offset: offset,
-          search: searchTerm,
-        });
-
-        const productsList = Array.isArray(response)
-          ? response
-          : response.products || [];
-        const total = response.total || productsList.length;
-
+        const { results: productsList, pagination } = await apiService.get(
+          `/allProducts?page=${currentPage}&search=${searchTerm}`
+        );
         setProducts(productsList);
-        setTotalItems(total);
+        setTotalItems(pagination.totalItems);
       } catch (error) {
         console.error("Failed to fetch products", error);
         setProducts([]);
@@ -41,20 +31,19 @@ export const AllProductsTab = ({ onProductClick }) => {
     fetchProducts();
   }, [currentPage, searchTerm]);
 
-  // Reset to page 1 when search changes
   const handleSearchChange = (term) => {
-    setSearchTerm(term);
+    setTimeout(() => {
+      setSearchTerm(term);
+    }, 400);
     setCurrentPage(1);
   };
-
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
     <div>
       <SearchBar
         value={searchTerm}
         onChange={handleSearchChange}
-        placeholder="Search products by name, category ..."
+        placeholder="Search products by name, category..."
       />
 
       <div className="bg-white rounded-lg shadow overflow-hidden mt-6">
@@ -87,10 +76,7 @@ export const AllProductsTab = ({ onProductClick }) => {
               <tbody className="divide-y divide-gray-200">
                 {products.length > 0 ? (
                   products.map((product) => (
-                    <tr
-                      key={product.product_id || product.id}
-                      className="hover:bg-gray-50"
-                    >
+                    <tr key={product.product_id} className="hover:bg-gray-50">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
                           <span className="font-medium">

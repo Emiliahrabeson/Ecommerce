@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useClients from "./hooks/useClient";
-import useProducts from "./hooks/useProducts";
+import useStats from "./hooks/useStats";
 import {
   Package,
   TrendingUp,
@@ -22,11 +22,11 @@ export default function App() {
   const [activeTab, setActiveTab] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const { products, loading: productsLoading } = useProducts();
+  // const { products, loading: productsLoading } = useProducts();
   const { clients, loading: clientsLoading } = useClients();
+  const { statistics, loading: statsLoading, _ } = useStats();
 
-  const categories = [...new Set(products.map((p) => p.category))];
-  const totalSales = products.reduce((sum, p) => sum + p.sales, 0);
+  // const clients = {};
 
   const tabs = [
     { label: "All Products", icon: Package, component: AllProductsTab },
@@ -38,7 +38,7 @@ export default function App() {
 
   const ActiveTabComponent = tabs[activeTab].component;
 
-  if (productsLoading || clientsLoading) {
+  if (clientsLoading || statsLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
@@ -65,25 +65,25 @@ export default function App() {
           <StatsCard
             icon={Package}
             title="Total Products"
-            value={products.length}
+            value={statistics?.totalProducts}
             color="bg-blue-100 text-blue-600"
           />
           <StatsCard
             icon={Users}
             title="Total Clients"
-            value={clients.length}
+            value={statistics?.totalClients}
             color="bg-green-100 text-green-600"
           />
           <StatsCard
             icon={Tag}
             title="Categories"
-            value={categories.length}
+            value={statistics?.totalCategories}
             color="bg-purple-100 text-purple-600"
           />
           <StatsCard
             icon={BarChart3}
             title="Total Sales"
-            value={totalSales}
+            value={statistics?.totalSales}
             color="bg-orange-100 text-orange-600"
           />
         </div>

@@ -3,7 +3,7 @@ import apiService from "../services";
 
 const useProducts = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -17,12 +17,12 @@ const useProducts = () => {
           offset: 0,
         });
 
-        console.log(" data tab tab:", data);
+        // console.log(" data tab tab:", data);
 
-        const flattenedData = Array.isArray(data) ? data.flat() : [];
+        // const flattenedData = Array.isArray(data) ? data.flat() : [];
 
-        console.log("Flattened products:", flattenedData);
-        setProducts(flattenedData);
+        // console.log("Flattened products:", flattenedData);
+        setProducts(data);
       } catch (err) {
         console.error("Error fetching products:", err);
         setError(err.message || "Failed to load products");

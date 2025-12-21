@@ -3,7 +3,7 @@ import apiService from "../services";
 
 const useClients = () => {
   const [clients, setClients] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -12,16 +12,15 @@ const useClients = () => {
         setLoading(true);
         setError(null);
 
-        const data = await apiService.get("/allClients", {
-          limit: 100,
-          offset: 0,
-        });
+        const data = await apiService.get("/allClients");
         console.log(" data tab tab:", data);
         const flattenedData = Array.isArray(data) ? data.flat() : [];
 
-        console.log("Flattened clients:", flattenedData);
+        // console.log("Flattened clients:", flattenedData);
         setClients(flattenedData);
       } catch (err) {
+        setLoading(false);
+      } finally {
         setLoading(false);
       }
     };

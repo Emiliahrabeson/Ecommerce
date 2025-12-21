@@ -1,7 +1,7 @@
 import apiService from "../services";
 import { useEffect, useState } from "react";
 
-export const TopProductsTab = ({ products }) => {
+export const TopProductsTab = () => {
   const [topProducts, setTopProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -15,12 +15,11 @@ export const TopProductsTab = ({ products }) => {
         });
 
         console.log("TopProducts data:", data);
-
-        const flatData = Array.isArray(data) ? data.flat() : [];
-        setTopProducts(flatData);
+        setTopProducts(data);
       } catch (error) {
         console.error("Error fetching top products:", error);
         setTopProducts([]);
+        // console.log("top Products :", TopProducts);
       } finally {
         setLoading(false);
       }
@@ -54,7 +53,7 @@ export const TopProductsTab = ({ products }) => {
           className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow"
         >
           <div className="flex items-start gap-4">
-            <div className="text-5xl font-bold text-gray-300">#{index + 1}</div>
+            <div className="text-5xl font-bold text-gray-300">{index + 1}</div>
             <div className="flex-grow">
               <div className="flex items-center gap-3 mb-3">
                 <h3 className="text-xl font-semibold">
@@ -72,14 +71,14 @@ export const TopProductsTab = ({ products }) => {
               <div className="text-3xl font-bold text-blue-600 mb-2">
                 ${parseFloat(product.price || 0).toFixed(2)}
               </div>
-              {onProductClick && (
+              {/* {onProductClick && (
                 <button
                   onClick={() => onProductClick(product)}
                   className="mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
                 >
                   View Details
                 </button>
-              )}
+              )} */}
             </div>
           </div>
         </div>
